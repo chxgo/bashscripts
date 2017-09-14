@@ -8,6 +8,7 @@
 user="root"
 password="123456"
 host="localhost"
+email="santiago.lunar.m@gmail.com"
 
 # Opciones adicionales
 mysql=/usr/bin/mysql
