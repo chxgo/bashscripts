@@ -4,30 +4,25 @@
 # santiagolunar@protonmail.com
 
 # Define variables
-log_path="/var/log/containers"
-backup_path="/storage/docker/backups"							# Root directory
-backup_mysql="$backup_path/mysql"							# MySQL logs dir
-backup_httpd="$backup_path/httpd"							# Httpd logs dir
+logDir="/var/log/containers"								# Syslog container's folder
+dockDir="/storage/docker"									# Backups folder
+dirs=$(ls -d $logDir/*/)									# Directories for loop iteration
 today="`date +%Y%m%d`"										# 
 awsOptsLogs="--recursive --exclude '*' --include '*.log'"	# Options for Logs folder to AWS S3
 awsOptsBcks="--recursive --exclude '*' --include '*.bz2'"	# Options fot Backups folder to AWS S3
 
-# Create directory with actual date
-echo "Creating directories $backup_mysql and $backup_httpd with date"
-if mkdir -p $backup_mysql/$today
-	then
-		echo "Directory successfully created"
-	else 
-		echo "ERROR: Directory not created"
-		echo "TERMINATED WITH ERRORS"
-fi
-if mkdir -p $backup_httpd/$today
-	then
-		echo "Directory successfully created"
-	else
-		echo "ERROR: Directory not created"
-		echo "TERMINATED WITH ERRORS"
-fi
+# Create date directories under backups and logs collecting folder
+echo "Creating directories with date..."
+for i in $dirs
+	do
+		if mkdir -p $dockDir/$i/$today
+			then
+				echo "Directory $bcksDir/$i/$today successfully created"
+			else 
+				echo "ERROR: Directory not created"
+				echo "TERMINATED WITH ERRORS"
+		fi
+	done
 
 # Find MySQL logs and copy them from logs dirs to backups dirs
 find $log_path/mysql -maxdepth 1 -name *log  -exec cp -t $backup_mysql/$today {} \;
