@@ -9,7 +9,8 @@ backup_path="/storage/docker/backups"							# Root directory
 backup_mysql="$backup_path/mysql"							# MySQL logs dir
 backup_httpd="$backup_path/httpd"							# Httpd logs dir
 today="`date +%Y%m%d`"										# 
-email="santiagolunar@protonmail.com"						# 
+awsOptsLogs="--recursive --exclude '*' --include '*.log'"	# Options for Logs folder to AWS S3
+awsOptsBcks="--recursive --exclude '*' --include '*.bz2'"	# Options fot Backups folder to AWS S3
 
 # Create directory with actual date
 echo "Creating directories $backup_mysql and $backup_httpd with date"
@@ -35,7 +36,7 @@ find $log_path/mysql -maxdepth 1 -name *log  -exec cp -t $backup_mysql/$today {}
 echo ""
 echo "Calling directory $backup_mysql"
 cd $backup_mysql
-if aws s3 cp $today s3://slunarcrossover/mysql/$today --recursive --exclude "*" --include "*.log"
+if aws s3 cp $today s3://slunarcrossover/mysql/$today $awsOptsLogs"
 	then
 		echo "Now your logs are in AWS S3"
 	else
@@ -65,7 +66,7 @@ fi
 echo ""
 echo "Calling directory $backup_mysql"
 cd $backup_mysql
-if aws s3 cp $today s3://slunarcrossover/backups/mysql/$today --recursive --exclude "*" --include "*.bz2"
+if aws s3 cp $today s3://slunarcrossover/backups/mysql/$today $awsOptsBcks"
 	then
 		echo "Now your backups are in AWS S3"
 	else
@@ -80,7 +81,7 @@ find $log_path/httpd -maxdepth 1 -name *log  -exec cp -t $backup_httpd/$today {}
 echo ""
 echo "Calling directory $backup_httpd"
 cd $backup_httpd
-if aws s3 cp $today s3://slunarcrossover/httpd/$today --recursive --exclude "*" --include "*.log"
+if aws s3 cp $today s3://slunarcrossover/httpd/$today $awsOptsLogs"
 	then
 		echo "Now your logs are in AWS S3"
 	else
@@ -112,7 +113,7 @@ fi
 echo ""
 echo "Calling directory $backup_httpd"
 cd $backup_httpd
-if aws s3 cp $today s3://slunarcrossover/backups/httpd/$today --recursive --exclude "*" --include "*.bz2"
+if aws s3 cp $today s3://slunarcrossover/backups/httpd/$today $awsOptsBcks"
 	then
 		echo "Now your backups are in AWS S3"
 	else
