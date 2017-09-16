@@ -4,7 +4,7 @@
 # santiagolunar@protonmail.com
 
 # Define variables
-logDir="/var/log/containers"								# Syslog container's folder
+logDir="/var/log/containers" 								# Syslog container's folder
 dockDir="/storage/docker"									# Backups folder
 dirs=$(ls -d $logDir/*/)									# Directories for loop iteration
 today="`date +%Y%m%d`"										# 
@@ -21,21 +21,30 @@ for i in $dirs
 				     and $dockDir/backups/$i/$today \n
 				     successfully created"
 			else 
-				echo "ERROR: Directory not created"
-				echo "TERMINATED WITH ERRORS"
+				echo "ERROR: Directory not created"; echo "TERMINATED WITH ERRORS"
 		fi
 	done
 
 # Find logs and copy them from logs folder to Log collecting folder
-echo "Finding Container's Logs and copying them to Collect folder"
-for i in $dirs
-	find $logDir/$i -maxdepth 1 -name *log  -exec cp -t $dockDir/backups/$i/$today {} \;
+echo "Finding Container's Logs and copying them to Collect folder and Backups folder"
+for i in $dirs; do
+	if find $logDir/$i -maxdepth 1 -name *log  -exec cp -t $dockDir/logs/$i/$today {} \;
+		then; 
+			echo ""; echo "Logs have been copied to Log's collecting folder"; echo ""
+		else
+			echo ""; echo "ERROR: Logs haven't been copied"; echo ""
+	fi
+	if find $logDir/$i -maxdepth 1 -name *log  -exec cp -t $dockDir/backups/$i/$today {} \;
+		then
+			echo ""; echo "Logs have been copied to Backups folder"; echo ""
+		else
+	fi		echo ""; echo "ERROR: Logs haven't been copied"; echo ""
+done
 
 # Sending Logs to S3 bucket
-echo ""
-echo "Calling directory $backup_mysql"
+echo ""; echo "Calling directory $backup_mysql"
 cd $backup_mysql
-if aws s3 cp $today s3://slunarcrossover/mysql/$today $awsOptsLogs"
+if aws s3 cp $today s3://slunarcrossover/mysql/$today $awsOptsLogs
 	then
 		echo "Now your logs are in AWS S3"
 	else
@@ -71,10 +80,6 @@ if aws s3 cp $today s3://slunarcrossover/backups/mysql/$today $awsOptsBcks"
 	else
 		echo "ERROR: Your backups are NOT in AWS S3"
 fi
-
-# Find HTTPD logs and copy them from logs dirs to backups dirs
-
-find $log_path/httpd -maxdepth 1 -name *log  -exec cp -t $backup_httpd/$today {} \;
 
 # Sending Logs to S3 bucket
 echo ""
