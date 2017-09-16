@@ -41,85 +41,23 @@ for i in $dirs; do
 	fi		echo ""; echo "ERROR: Logs haven't been copied"; echo ""
 done
 
-# Sending Logs to S3 bucket
-echo ""; echo "Calling directory $backup_mysql"
-cd $backup_mysql
-if aws s3 cp $today s3://slunarcrossover/mysql/$today $awsOptsLogs
+# Compress Logs prior to move them to AWS S3 Bucket
+echo ""; echo "Beggining Log compressing before sending to AWS S3 Bucket"
+for i in $dirs; do
+	if pbzip2 -v $dockDir/backups/$i/$today
+		then 
+			echo "Data compressed successfully"
+		else
+			echo "ERROR: Data NOT compressed"; echo "TERMINATED WITH ERRORS"
+	fi
+done
+
+# Sending Logs and backups to AWS S3 Bucket
+echo ""; echo "Uploading Collected Logs and *.bz2 Backups to AWS S3 Bucket"
+for i in $dirs; do
+	if aws s3 mv $dockDir/logs/$i/$today s3://slunarcrossover/logs/$i/$today $awsOptsLogs && if aws s3 mv $dockDir/backups/$i/$today s3://slunarcrossover/backups/$i/$today $awsOptsBcks
 	then
 		echo "Now your logs are in AWS S3"
 	else
 		echo "ERROR: Your data is NOT in AWS S3"
-fi
-# Compress moved data into .bz2
-echo ""
-echo ""
-echo ""
-echo "Calling $backup_mysql/$today"
-if cd $backup_mysql/$today
-	then
-		echo "Compressing data..."
-		if pbzip2 -v $backup_mysql/$today/*.log
-			then 
-				echo "Data compressed successfully"
-			else
-				echo "ERROR: Data NOT compressed"
-				echo "TERMINATED WITH ERRORS"
-		fi					
-	else
-		echo "ERROR: Directory not found"
-		echo "TERMINATED WITH ERRORS"
-fi
-
-# Sending compressed backups to S3 bucket
-echo ""
-echo "Calling directory $backup_mysql"
-cd $backup_mysql
-if aws s3 cp $today s3://slunarcrossover/backups/mysql/$today $awsOptsBcks"
-	then
-		echo "Now your backups are in AWS S3"
-	else
-		echo "ERROR: Your backups are NOT in AWS S3"
-fi
-
-# Sending Logs to S3 bucket
-echo ""
-echo "Calling directory $backup_httpd"
-cd $backup_httpd
-if aws s3 cp $today s3://slunarcrossover/httpd/$today $awsOptsLogs"
-	then
-		echo "Now your logs are in AWS S3"
-	else
-		echo "ERROR: Your data is NOT in AWS S3"
-fi
-
-# Compress moved data into .bz2
-echo ""
-echo ""
-echo ""
-echo ""
-echo "Calling $backup_httpd/$today"
-if cd $backup_httpd/$today
-	then
-		echo "Compressing data..."
-		if pbzip2 -v $backup_httpd/$today/*.log
-			then 
-				echo "Data compressed successfully"
-			else
-				echo "ERROR: Data NOT compressed"
-				echo "TERMINATED WITH ERRORS"
-		fi					
-	else
-		echo "ERROR: Directory not found"
-		echo "TERMINATED WITH ERRORS"
-fi
-
-# Sending compressed backups to S3 bucket
-echo ""
-echo "Calling directory $backup_httpd"
-cd $backup_httpd
-if aws s3 cp $today s3://slunarcrossover/backups/httpd/$today $awsOptsBcks"
-	then
-		echo "Now your backups are in AWS S3"
-	else
-		echo "ERROR: Your backups are NOT in AWS S3"
 fi
