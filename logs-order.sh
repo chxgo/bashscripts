@@ -15,17 +15,21 @@ awsOptsBcks="--recursive --exclude '*' --include '*.bz2'"	# Options fot Backups 
 echo "Creating directories with date..."
 for i in $dirs
 	do
-		if mkdir -p $dockDir/$i/$today
+		if mkdir -p $dockDir/logs/$i/$today && mkdir -p $dockDir/backups/$i/$today
 			then
-				echo "Directory $bcksDir/$i/$today successfully created"
+				echo "Folders $bcksDir/logs/$i/$today \n
+				     and $dockDir/backups/$i/$today \n
+				     successfully created"
 			else 
 				echo "ERROR: Directory not created"
 				echo "TERMINATED WITH ERRORS"
 		fi
 	done
 
-# Find MySQL logs and copy them from logs dirs to backups dirs
-find $log_path/mysql -maxdepth 1 -name *log  -exec cp -t $backup_mysql/$today {} \;
+# Find logs and copy them from logs folder to Log collecting folder
+echo "Finding Container's Logs and copying them to Collect folder"
+for i in $dirs
+	find $logDir/$i -maxdepth 1 -name *log  -exec cp -t $dockDir/backups/$i/$today {} \;
 
 # Sending Logs to S3 bucket
 echo ""
