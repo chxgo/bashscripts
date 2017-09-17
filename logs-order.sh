@@ -49,7 +49,6 @@ for i in $dirs; do
 			echo "Data compressed successfully"
 		else
 			echo "ERROR: Data NOT compressed"; echo "TERMINATED WITH ERRORS"
-	fi
 done
 
 # Sending Logs and backups to AWS S3 Bucket
@@ -60,4 +59,5 @@ for i in $dirs; do
 		echo "Now your logs are in AWS S3"
 	else
 		echo "ERROR: Your data is NOT in AWS S3"
-fi
+	fi
+done
