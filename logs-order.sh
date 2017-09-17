@@ -7,10 +7,10 @@
 logDir="/var/log/containers" 								# Syslog container's folder
 dockDir="/storage/docker"									# Backups folder
 dirs=$(ls -d $logDir/*/)									# Directories for loop iteration
-today="`date +%Y%m%d`"										# 
+today=$(date +%Y%m%d)										# 
 awsOptsLogs="--recursive --exclude '*' --include '*.log'"	# Options for Logs folder to AWS S3
 awsOptsBcks="--recursive --exclude '*' --include '*.bz2'"	# Options fot Backups folder to AWS S3
-
+set -e errexit
 # Create date directories under backups and logs collecting folder
 echo "Creating directories with date..."
 for i in $dirs
@@ -54,7 +54,7 @@ done
 # Sending Logs and backups to AWS S3 Bucket
 echo ""; echo "Uploading Collected Logs and *.bz2 Backups to AWS S3 Bucket"
 for i in $dirs; do
-	if aws s3 mv $dockDir/logs/$i/$today s3://slunarcrossover/logs/$i/$today $awsOptsLogs && if aws s3 mv $dockDir/backups/$i/$today s3://slunarcrossover/backups/$i/$today $awsOptsBcks
+	if aws s3 mv $dockDir/logs/$i/$today s3://slunarcrossover/logs/$i/$today $awsOptsLogs && aws s3 mv $dockDir/backups/$i/$today s3://slunarcrossover/backups/$i/$today $awsOptsBcks
 	then
 		echo "Now your logs are in AWS S3"
 	else
