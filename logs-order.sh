@@ -61,3 +61,4 @@ for i in $dirs; do
 		echo "ERROR: Your data is NOT in AWS S3"
 	fi
 done
+exit
