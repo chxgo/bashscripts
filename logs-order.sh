@@ -17,53 +17,50 @@ awsOptsBcks="--recursive --exclude '*' --include '*.bz2'"	# Options fot Backups 
 
 
 # Create date directories under backups and logs collecting folder
-echo "Creating directories with date..."
-for i in "${dirs[@]}"
-	do
-		if mkdir -p $dockDir/logs/"$i"/"$today" && mkdir -p $dockDir/backups/"$i"/"$today"
-			then
-				echo "Folders $dockDir/logs/$i/$today and $dockDir/backups/$i/$today successfully created"
+printf "Creating directories with date... \n"
+for i in "${dirs[@]}"; do
+		if mkdir -p $dockDir/logs/"$i"/"$today" && mkdir -p $dockDir/backups/"$i"/"$today"; then
+				printf "Folders $dockDir/logs/$i/$today and $dockDir/backups/$i/$today successfully created\n"
 			else 
-				echo "ERROR: Directory not created"; echo "TERMINATED WITH ERRORS"
+				printf "ERROR: Directory not created"; printf "TERMINATED WITH ERRORS\n"
 		fi
 	done
 
 # Find logs and copy them from logs folder to Log collecting folder
-echo "Finding Container's Logs and copying them to Collect folder and Backups folder"
+printf "Finding Container's Logs and copying them to Collect folder and Backups folder\n"
 for i in "${dirs[@]}"; do
 	if find "$logDir"/"$i" -maxdepth 1 -name *log  -exec cp --target-directory="$dockDir/logs/$i/$today" {} \;
 		then
-			echo ""; echo "Logs have been copied to Log's collecting folder"; echo ""
+			printf "\n"; printf "Logs have been copied to Log's collecting folder\n"; printf "\n"
 		else
-			echo ""; echo "ERROR: Logs haven't been copied"; echo ""
+			printf "\n"; printf "ERROR: Logs haven't been copied\n"; printf "\n"
 	fi
 	if find "$logDir"/"$i" -maxdepth 1 -name *log  -exec cp --target-directory="$dockDir/backups/$i/$today" {} \;
 		then
-			echo ""; echo "Logs have been copied to Backups folder"; echo ""
+			printf "\n"; printf "Logs have been copied to Backups folder\n"; printf "\n"
 		else
-			echo ""; echo "ERROR: Logs haven't been copied"; echo ""
+			printf "\n"; printf "ERROR: Logs haven't been copied\n"; printf "\n"
 	fi
 done
 
 # Compress Logs prior to move them to AWS S3 Bucket
-echo ""; echo "Beggining Log compressing before sending to AWS S3 Bucket"
+printf "\n"; printf "Beggining Log compressing before sending to AWS S3 Bucket\n"
 for i in "${dirs[@]}"; do
-	if pbzip2 --verbose $dockDir/backups/"$i"/"$today"/*.log
-		then 
-			echo "Data compressed successfully"
+	if pbzip2 --verbose $dockDir/backups/"$i"/"$today"/*.log; then
+			printf "Data compressed successfully\n"
 		else
-			echo "ERROR: Data NOT compressed"; echo "TERMINATED WITH ERRORS"
+			printf "ERROR: Data NOT compressed\n"
+			printf "TERMINATED WITH ERRORS\n"
 	fi
 done
 
 # Sending Logs and backups to AWS S3 Bucket
-echo ""; echo "Uploading Collected Logs and *.bz2 Backups to AWS S3 Bucket"
+printf "\n"; printf "Uploading Collected Logs and *.bz2 Backups to AWS S3 Bucket\n"
 for i in "${dirs[@]}"; do
-	if aws s3 mv $dockDir/logs/"$i"/"$today" s3://slunarcrossover/logs/"$i"/"$today" $awsOptsLogs && aws s3 mv $dockDir/backups/"$i"/"$today" s3://slunarcrossover/backups/"$i"/"$today" $awsOptsBcks
-		then
-			echo "Now your logs are in AWS S3"
+	if aws s3 mv $dockDir/logs/"$i"/"$today" s3://slunarcrossover/logs/"$i"/"$today" $awsOptsLogs && aws s3 mv $dockDir/backups/"$i"/"$today" s3://slunarcrossover/backups/"$i"/"$today" $awsOptsBcks; then
+			printf "Now your logs are in AWS S3\n"
 		else
-			echo "ERROR: Your data is NOT in AWS S3"
+			printf "ERROR: Your data is NOT in AWS S3\n"
 	fi
 done
 exit
