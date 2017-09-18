@@ -3,7 +3,9 @@
 # Writter by Santiago Lunar
 # santiagolunar@protonmail.com
 
-set -o errexit												# Script exits when a command fails
+set -o errexit												# Exit when a command fails
+set -o nounset												# Exit when trying to use undeclared variables.
+
 
 # Define variables
 logDir="/var/log/containers" 								# Syslog container's folder
@@ -18,7 +20,7 @@ awsOptsBcks="--recursive --exclude '*' --include '*.bz2'"	# Options fot Backups 
 echo "Creating directories with date..."
 for i in $dirs
 	do
-		if mkdir -p $dockDir/logs/"$i"/"$today" && mkdir -p $dockDir/backups/"$i"/"$today"
+		if mkdir -p "$dockDir"/logs/"$i"/"$today" && mkdir -p "$dockDir"/backups/"$i"/"$today"
 			then
 				echo "Folders $dockDir/logs/$i/$today \
 				     and $dockDir/backups/$i/$today \
@@ -31,13 +33,13 @@ for i in $dirs
 # Find logs and copy them from logs folder to Log collecting folder
 echo "Finding Container's Logs and copying them to Collect folder and Backups folder"
 for i in $dirs; do
-	if find $logDir/"$i" -maxdepth 1 -name *log  -exec cp --target-directory="$dockDir/logs/$i/$today" {} \;
+	if find "$logDir"/"$i" -maxdepth 1 -name *log  -exec cp --target-directory="$dockDir/logs/$i/$today" {} \;
 		then
 			echo ""; echo "Logs have been copied to Log's collecting folder"; echo ""
 		else
 			echo ""; echo "ERROR: Logs haven't been copied"; echo ""
 	fi
-	if find $logDir/"$i" -maxdepth 1 -name *log  -exec cp --target-directory="$dockDir/backups/$i/$today" {} \;
+	if find "$logDir"/"$i" -maxdepth 1 -name *log  -exec cp --target-directory="$dockDir/backups/$i/$today" {} \;
 		then
 			echo ""; echo "Logs have been copied to Backups folder"; echo ""
 		else
