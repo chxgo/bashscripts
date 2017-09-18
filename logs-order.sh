@@ -29,7 +29,7 @@ for i in $dirs
 echo "Finding Container's Logs and copying them to Collect folder and Backups folder"
 for i in $dirs; do
 	if find $logDir/$i -maxdepth 1 -name *log  -exec cp -t $dockDir/logs/$i/$today {} \;
-		then; 
+		then
 			echo ""; echo "Logs have been copied to Log's collecting folder"; echo ""
 		else
 			echo ""; echo "ERROR: Logs haven't been copied"; echo ""
@@ -38,7 +38,8 @@ for i in $dirs; do
 		then
 			echo ""; echo "Logs have been copied to Backups folder"; echo ""
 		else
-	fi		echo ""; echo "ERROR: Logs haven't been copied"; echo ""
+			echo ""; echo "ERROR: Logs haven't been copied"; echo ""
+	fi
 done
 
 # Compress Logs prior to move them to AWS S3 Bucket
