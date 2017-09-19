@@ -1,6 +1,6 @@
 #!/bin/bash
 # Ordering & backing up Docker Container's Logs
-# Writter by Santiago Lunar
+# Written by Santiago Lunar
 # santiagolunar@protonmail.com
 
 set -o errexit												# Exit when a command fails
@@ -11,7 +11,7 @@ set -o nounset												# Exit when trying to use undeclared variables.
 logDir="/var/log/containers" 								# Syslog container's folder
 dockDir="/storage/docker"									# Backups folder
 dirs=("mysql" "httpd")											# List of directories for loop iteration
-today=$(date +%Y%m%d)										# 
+today=$(date +%Y%m%d)										#
 awsOptsLogs="--recursive --exclude '*' --include '*.log'"	# Options for Logs folder to AWS S3
 awsOptsBcks="--recursive --exclude '*' --include '*.bz2'"	# Options fot Backups folder to AWS S3
 
@@ -21,7 +21,7 @@ printf "Creating directories with date... \n"
 for i in "${dirs[@]}"; do
 		if mkdir -p $dockDir/logs/"$i"/"$today" && mkdir -p $dockDir/backups/"$i"/"$today"; then
 				printf "Folders $dockDir/logs/$i/$today and $dockDir/backups/$i/$today successfully created\n"
-			else 
+			else
 				printf "ERROR: Directory not created"; printf "TERMINATED WITH ERRORS\n"
 		fi
 	done
