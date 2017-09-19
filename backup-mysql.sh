@@ -6,10 +6,10 @@
 set -o errexit												# Exit when a command fails
 set -o nounset												# Exit when trying to use undeclared variables.
 
-Host=10.0.0.213
-BDir=/media/backup1/srv213/mysql/
+host="10.0.0.213"
+dbDir="/media/backup1/srv213/mysql/"
 
-Dump="mysqldump --skip-extended-insert --force --lock-all-tables"
+dumpOpts="--skip-extended-insert --force --lock-all-tables"
 MySQL="/usr/bin/mysql"
 
 Today=$(date "+%d-%b-%Y")
@@ -23,5 +23,5 @@ for db in $Databases; do
         file="$BDir/$Today/$db.sql.gz"
         echo "Backing up '$db' from '$Host' on '$date' to: "
         echo "   $file"
-#        $Dump -h $Host $db | gzip > $file
+        mysqldump $dumpOpts -h $Host $db | gzip > $file
 done
