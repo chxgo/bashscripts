@@ -1,6 +1,6 @@
 #!/bin/bash
 # Ordering & backing up Docker Container's Logs
-# Written by Santiago Lunar
+# Written by Santiago Lunar M.
 # santiagolunar@protonmail.com
 
 set -o errexit												# Exit when a command fails
