@@ -14,16 +14,16 @@ dbDir="/media/backup1/srv213/mysql/"                        # Folder to allocate
 dumpOpts="--skip-extended-insert --force --lock-all-tables" # Options for mysqldump
 mysql="/usr/bin/mysql"                                      # MySQL executable path
 today=$(date "+%d-%b-%Y")
+user="respaldos"                                            # The MySQL user for backups
 
 # Let's begin
 printf "Obteniendo una lista completa de las bases de datos\n"
-dbs=$(echo "SHOW DATABASES" | $mysql -h $host -u respaldos) # Get a complete list of DBs
+dbs=$(echo "SHOW DATABASES" | $mysql -h $host -u $user)     # Get a complete list of DBs
 
-printf "Empieza el respaldo de "
+printf "Empieza el respaldo de bases de datos...\n"
 for i in $dbs; do
-    date=$today
     file="$dbDir/$today/$i.sql.gz"
-    printf "Backing up '$i' from '$host' on '$date' to:\n"
+    printf "Backing up '$i' from '$host' on '$today' to: $dbDir/$today/$i.sql.gz\n"
     printf "$file\n"
     mysqldump $dumpOpts -h $Host $db | gzip > $file
 done
