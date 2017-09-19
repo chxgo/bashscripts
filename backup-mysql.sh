@@ -1,4 +1,10 @@
 #!/bin/bash
+# Ordering & backing up Docker Container's Logs
+# Written by Santiago Lunar
+# santiagolunar@protonmail.com
+
+set -o errexit												# Exit when a command fails
+set -o nounset												# Exit when trying to use undeclared variables.
 
 Host=10.0.0.213
 BDir=/media/backup1/srv213/mysql/
