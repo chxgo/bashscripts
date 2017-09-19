@@ -22,9 +22,10 @@ dbs=$(echo "SHOW DATABASES" | $mysql -h $host -u $user)     # Get a complete lis
 
 printf "Empieza el respaldo de bases de datos...\n"
 for i in $dbs; do
-    file="$dbDir/$today/$i.sql.gz"
+    file="$dbDir/$today/$i.sql.gz"                          # Stablish backup name
     printf "Backing up '$i' from '$host' on '$today' to: $dbDir/$today/$i.sql.gz\n"
     printf "$file\n"
-    mysqldump $dumpOpts -h $Host $db | gzip > $file
+    mysqldump $dumpOpts -h $host $i | gzip > $file          # Dump and compression of databases
 done
+
 exit
