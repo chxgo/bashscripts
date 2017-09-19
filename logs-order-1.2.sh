@@ -3,6 +3,10 @@
 # Written by Santiago Lunar
 # santiagolunar@protonmail.com
 
+# First off: security!
+set -o errexit												# Exit when command fails
+set -o nounset												# Exit when trying to use undeclared variables
+
 # Define variables
 log_path="/var/log/containers"
 backup_path="/storage/docker/backups"						# Root directory
@@ -14,18 +18,16 @@ aws_opts_l="--recursive --exclude '*' --include '*.log'"	# AWS options for Logs 
 aws_opts_b="--recursive --exclude '*' --include '*.bz2'"	# AWS options for Backups uploading
 
 # Create directories with actual date
-printf "Creating date directories within $backup_path and $log_collect_path"
+printf "Creating date directories within $backup_path and $log_collect_path\n"
 for i in $dirs; do
 	if mkdir -p $backup_path/$i/$today && mkdir -p $log_collect_path/$i/$today
 		then
-			printf ""
-			printf "Directory $backup_path/$i/$today successfully created"
-			printf ""
-			printf "Directory $log_collect_path/$i/$today successfully created"
-			printf ""
+			printf "\n\n"; printf "Directory $backup_path/$i/$today successfully created\n"
+			printf "\n\n"; printf "Directory $log_collect_path/$i/$today successfully created\n"
+			printf "\n\n"
 		else
-			printf "ERROR: Directory not created"
-			printf "TERMINATED WITH ERRORS"
+			printf "ERROR: Directory not created\n"
+			printf "TERMINATED WITH ERRORS\n"
 	fi
 done
 
