@@ -1,11 +1,10 @@
 #!/bin/bash
 # Ordering & backing up Docker Container's Logs
-# Written by Santiago Lunar M.
+# Written by Santiago Lunar
 # santiagolunar@protonmail.com
 
 set -o errexit												# Exit when a command fails
 set -o nounset												# Exit when trying to use undeclared variables.
-
 
 # Define variables
 logDir="/var/log/containers" 								# Syslog container's folder
