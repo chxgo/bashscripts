@@ -12,17 +12,18 @@ dbDir="/media/backup1/srv213/mysql/"
 dumpOpts="--skip-extended-insert --force --lock-all-tables"
 mysql="/usr/bin/mysql"
 
-Today=$(date "+%d-%b-%Y")
+today=$(date "+%d-%b-%Y")
 
 # Obtener una lista de las bases de datos
 printf "Obtener una lista completa de las bases de datos\n"
-Databases=$(echo "SHOW DATABASES" | $MySQL -h $Host -u respaldos)
+dbs=$(echo "SHOW DATABASES" | $mysql -h $host -u respaldos)
 
 
-for db in $Databases; do
-        date=`date`
-        file="$BDir/$Today/$db.sql.gz"
-        echo "Backing up '$db' from '$Host' on '$date' to: "
-        echo "$file"
+for i in $dbs; do
+        date=$today
+        file="$dbDir/$today/$i.sql.gz"
+        printf "Backing up '$i' from '$host' on '$date' to:\n"
+        printf "$file\n"
         mysqldump $dumpOpts -h $Host $db | gzip > $file
 done
+exit
