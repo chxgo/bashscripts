@@ -17,15 +17,15 @@ today=$(date "+%d-%b-%Y")
 user="respaldos"                                            # The MySQL user for backups
 
 # Let's begin
-printf "Obteniendo una lista completa de las bases de datos\n"
+printf "Getting a complete list of databases...\n"
 dbs=$(echo "SHOW DATABASES" | $mysql -h $host -u $user)     # Get a complete list of DBs
 
-printf "Empieza el respaldo de bases de datos...\n"
+printf "Beggining database backup and compression...\n"
 for i in $dbs; do
     file="$dbDir/$today/$i.sql.gz"                          # Stablish backup name
-    printf "Backing up '$i' from '$host' on '$today' to: $dbDir/$today/$i.sql.gz\n"
-    printf "$file\n"
-    mysqldump $dumpOpts -h $host $i | gzip > $file          # Dump and compression of databases
+    printf "Backing up %s from %s on %s to: $dbDir/$today/$i.sql.gz\n" "$i" "$host" "$today"
+    printf "%s\n" "$file"
+    mysqldump "$dumpOpts" -h "$host" "$i" | gzip > "$file"          # Dump and compression of databases
 done
 
 exit
