@@ -5,7 +5,6 @@
 use strict;
 use warnings;
 
-my $age;
-$age = '30';
+my $age ='30';
 print "hi Santiago your age is $age\n";
 exit;
