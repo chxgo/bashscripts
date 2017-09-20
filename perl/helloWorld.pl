@@ -1,7 +1,8 @@
 #!/usr/bin/perl
 # Written by Santiago Lunar
+# Another comment
 
 use strict;
 use warnings;
 
-say "hi Santiago";
+print "hi Santiago\n";
