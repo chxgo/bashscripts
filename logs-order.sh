@@ -19,7 +19,7 @@ awsOptsBcks="--recursive --exclude '*' --include '*.bz2'"	# Options fot Backups 
 printf "Creating directories with date... \n"
 for i in "${dirs[@]}"; do
 		if mkdir -p $dockDir/logs/"$i"/"$today" && mkdir -p $dockDir/backups/"$i"/"$today"; then
-				printf "Folders $dockDir/logs/$i/$today and $dockDir/backups/$i/$today successfully created\n"
+				printf "Folders %s/logs/%s/%s and $dockDir/backups/$i/$today successfully created\n" "$dockDir" "$i" "$today"
 			else
 				printf "ERROR: Directory not created"; printf "TERMINATED WITH ERRORS\n"
 		fi
