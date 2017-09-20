@@ -5,4 +5,7 @@
 use strict;
 use warnings;
 
-print "hi Santiago\n";
+my $age;
+$age = '30';
+print "hi Santiago your age is $age\n";
+exit;
