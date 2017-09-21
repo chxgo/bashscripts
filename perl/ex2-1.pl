@@ -5,12 +5,12 @@
 # The answer you get should be about 78.5
 
 print "Please enter the radius: \n";
-chomp (my $radius = <STDIN>);
+chomp ($radius = <STDIN>);
 if ($radius le 0) {
     print "The radius you've entered is invalid, so the circumference will be Zero\n";
     print "Please try again\n";
 } else {
-my $pi = 3.141592652;
-my $circumference = $radius*(2*$pi);
+$pi = 3.141592652;
+$circumference = $radius*(2*$pi);
 print "The total circumference of the circle is $circumference\n";
 }
