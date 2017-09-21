@@ -6,11 +6,11 @@
 # fred wilma. Are all of the strings on one line in the output or on separate lines?
 # Could you make the output appear in either style?
 
-use strict;
+#use strict;
 use warnings;
 
 print "Write some words. After each word press \"Enter\" and when finished press Ctrl\+D:\n";
-chomp (my @string = <STDIN>);
+chomp (@string = <STDIN>);
 @string = sort (@string);
 print "Your words in code point order are: @string\n\n";
 #print sort <STDIN>;
