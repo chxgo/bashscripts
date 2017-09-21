@@ -7,12 +7,12 @@
 #2, 4, and 2, the output names would be fred, betty, dino, and betty:
 # fred betty barney dino wilma pebbles bamm-bamm
 
-use strict;
+#use strict;
 use warnings;
 
-my @names = qw/ fred betty barney dino wilma pebbles bamm-bamm /;
+@names = qw/ fred betty barney dino wilma pebbles bamm-bamm /;
 print "Write numbers from 1 to 7 pressing \"Enter\" after each one, then press Ctrl-D:\n";
-chomp(my @numbers = <STDIN>);
+chomp(@numbers = <STDIN>);
 foreach (@numbers) {
   print "$names[ $_ - 1 ]\n";
 }
