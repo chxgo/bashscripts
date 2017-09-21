@@ -1,8 +1,12 @@
 #!/usr/bin/perl
 # Created by Santiago Lunar from Learning Perl book
 
-@lines = `perldoc -u -f atan2`;
-  foreach (@lines) {
-  s/\w<([^>]+)>/\U$1/g;
-  print;
+my $name = "santiago";
+my $last = "lunar";
+my $city = "santiago";
+my $is_equal = $name eq $city;                  # Boolean. True in this case.
+if ($is_equal) {                                # Conditional
+    print "Hello $name $last\n";
+} else {
+    print "The name and city are not equals\n";
 }
