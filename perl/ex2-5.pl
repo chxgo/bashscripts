@@ -12,7 +12,8 @@ print "Please enter your name: \n";
 chomp (my $name = <STDIN>);
 print "Now, enter your age: \n";
 chomp (my $age = <STDIN>);
-while ($age gt 0) {
-    print "$age Your name is $name \n";
-    $age -= 1;
-}
+#while ($age gt 0) {
+#    print "$age Your name is $name \n";
+#    $age -= 1;
+#}
+print "$name\n"x"$age";
