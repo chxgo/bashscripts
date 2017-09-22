@@ -6,11 +6,14 @@
 # fred wilma. Are all of the strings on one line in the output or on separate lines?
 # Could you make the output appear in either style?
 
-#use strict;
+#use v5.12;                 # Implicitly use the strict pragma
+#use strict;                # Good programming rules
 use warnings;
 
 print "Write some words. After each word press \"Enter\" and when finished press Ctrl\+D:\n";
 chomp (@string = <STDIN>);
+$shiString = shift (@string);
+print "This is shift result $shiString\n";
 @string = sort (@string);
 print "Your words in code point order are: @string\n\n";
 #print sort <STDIN>;
