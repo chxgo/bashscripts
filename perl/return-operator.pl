@@ -9,9 +9,9 @@ my $result = &which_element_is("dino", @names);                       # Assing s
 
 sub which_element_is {                                                # Define subrutine
   my ($what,@array) = @_;                                             # Assing @_ values ("dino" & @names) to $what & @array
-  foreach (00..$#array) {
-    if ($what eq $array[$_]) {
-      return $_;
+  foreach (00..$#array) {                                             # Iterate over each array index element from 00 to n
+    if ($what eq $array[$_]) {                                        # Compares $what value to array index
+      return $_;                                                      # Return $_ value
     }
   }
   -1;          # Element does not exists
