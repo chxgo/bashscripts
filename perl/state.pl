@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 # Example use of state instead of my
 
-use v5.10;
+#use v5.20;
 use warnings;
 running_sum( 5, 6 );
 running_sum( 1..3 );
