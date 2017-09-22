@@ -16,3 +16,5 @@ sub which_element_is {                                                # Define s
   }
   -1;          # Element does not exists
 }
+
+print "The element 'dino' is the number $result in the array.\n";
