@@ -3,23 +3,28 @@
 # @Author: chxgo
 # @Date:   2017-09-22T16:44:53-03:00
 # @Last modified by:   chxgo
-# @Last modified time: 2017-09-22T16:54:31-03:00
+# @Last modified time: 2017-09-22T17:09:47-03:00
 
 use v5.10;
 
 greet ('Fred');
 greet ('Barney');
+greet ('Wilma');
+greet ('Betty');
 
 sub greet {
-  state $last_person;
+  state @last_person;
 
   my $name = shift;
 
   print "Hi! $name ";
-  if (defined $last_person) {
-    print "$last_person is here!\n";
+  if (@last_person) {
+    foreach ($_) {
+      print "I've seen: @last_person\n";
+      push @last_person, $name;
+    }
   } else {
     print "You are the first one ever!\n";
+    push @last_person, $name;
   }
-  $last_person = $name;
 }
