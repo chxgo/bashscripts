@@ -16,5 +16,5 @@ my $sum = 1;
 while (<>) {
   chomp;
   $sum += 1;
-  printf "Line %s was: \"$_\"\n", $sum;
+  printf "Line %s was: \"%*s\"\n", $sum, -8, $_;
 }
