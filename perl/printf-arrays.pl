@@ -9,4 +9,4 @@ my @items = qw/ wilma dino pebbles /;
 # printf $format, @items;
 
 # Even better
-printf "The items are: \n" . "(%-10s\n) x @items", @items;
+printf "The items are: \n" . ("%-10s\n" x @items), @items;
