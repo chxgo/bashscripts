@@ -16,8 +16,8 @@ while read i;
  	echo "Informacion de IP: $i"
  	echo "####################################"
  	echo ""
- 	 	dig -x $i | grep PTR
- 	 	dig -x $i | grep SOA
+ 	 	$dig -x $i | grep PTR
+ 	 	$dig -x $i | grep SOA
  	 	whois $i | grep NetName
  	 	whois $i | grep OrgName
  	echo ""
