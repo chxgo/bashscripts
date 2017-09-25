@@ -3,7 +3,6 @@
 #
 
 sub total {
-  my @sum;
   foreach (@_) {
     $sum += $_;
   }
