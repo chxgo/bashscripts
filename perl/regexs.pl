@@ -11,8 +11,8 @@
 
 while (<STDIN>) {
   chomp;
-  if (/santi\.?/) {
-    printf "It was found!\n";
+  if (/\Ahttps?:\/\//) {
+    printf "URL was found!\n";
   } else {
     printf "Try again\n";
   }
