@@ -6,7 +6,7 @@ use warnings;
 
 printf "Please write any text that contains \*wilma\* or \*fred\*: \n";
 while (<STDIN>) {
-  if (/(wilma|fred)/) {
+  if (/wilma/ and /fred/) {
     print;
   }
 }
