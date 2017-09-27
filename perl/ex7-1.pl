@@ -6,9 +6,9 @@
 use warnings;
 use autodie;
 
-printf "Enter some words metioning \*fred\*\n";
+printf "Enter some words metioning \*Fred\*\n";
 while (<STDIN>) {
-  if (/fred/) {
+  if (/[Ff]red/) {
     print;
   }
 }
