@@ -5,12 +5,12 @@ use strict;
 use warnings;
 use autodie;
 
-printf "Please write some ramdom text: \n";
+printf "Only the lines with a space at the end will be repeated: \n";
 while (<STDIN>) {
   chomp;
   if (/\p{Space}\z/) {
     print "$_*";
   } else {
-    print "Not found\n";
+    print "Does not have a space at the EOL\n";
   }
 }
