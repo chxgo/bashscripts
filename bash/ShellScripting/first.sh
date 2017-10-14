@@ -1,5 +1,6 @@
 #!/bin/sh
+# Written by Santiago Lunar
 
-cat "$0"
-echo "==="
-tac "$0"
+echo "Enter your first and last name:"
+read name lastname
+echo "Hello $name $lastname"
