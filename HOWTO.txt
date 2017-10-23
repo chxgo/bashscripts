@@ -1,4 +1,0 @@
-Example code from "Learning Python 5th Edition"
-----
-Fetch the zip file here, unzip on your computer,
-and see top-level file README.txt for usage notes.
