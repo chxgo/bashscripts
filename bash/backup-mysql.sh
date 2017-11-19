@@ -28,4 +28,4 @@ for i in $dbs; do
     mysqldump "$dumpOpts" -h "$host" "$i" | gzip > "$file"          # Dump and compression of databases
 done
 
-exit
+exit 0
