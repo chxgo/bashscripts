@@ -2,7 +2,7 @@
 # Exercise 16-1
 # Written by Santiago Lunar
 
-use strict;
+#use strict;
 
 my $filename = "text.test";
 open my $fh, '<', $filename
